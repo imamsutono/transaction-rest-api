@@ -24,7 +24,12 @@
 	$item->customer_name = $data->customer_name;
 
 	if ($item->createTransaction()) {
-		echo "Transaction created successfully";
+		$arr = array(
+			"references_id" => $item->references_id,
+			"number_va" => $item->number_va,
+			"status" => $item->status
+		);
+		echo json_encode($arr);
 	} else {
 		echo "Transaction could not be created";
 	}

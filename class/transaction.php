@@ -17,6 +17,8 @@
 		public $number_va;
 		public $customer_name;
 
+		private $default_status = "pending";
+
 		public function __construct($db) {
 			$this->conn = $db;
 		}
@@ -41,6 +43,7 @@
 			$this->payment_type = htmlspecialchars(strip_tags($this->payment_type));
 			$this->number_va = htmlspecialchars(strip_tags($this->number_va));
 			$this->customer_name = htmlspecialchars(strip_tags($this->customer_name));
+			$this->status = $this->default_status;
 
 			$stmt->bindParam(":invoice_id", $this->invoice_id);
 			$stmt->bindParam(":merchant_id", $this->merchant_id);
@@ -51,6 +54,7 @@
 			$stmt->bindParam(":customer_name", $this->customer_name);
 
 			if ($stmt->execute()) {
+				$this->references_id = $this->conn->lastInsertId();
 				return true;
 			}
 			return false;
