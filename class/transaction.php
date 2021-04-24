@@ -7,6 +7,7 @@
 		private $db_table = "transaction";
 
 		// columns
+		public $references_id;
 		public $invoice_id;
 		public $merchant_id;
 		public $status;
@@ -56,6 +57,19 @@
 		}
 
 		public function getStatus() {
+			$query = "SELECT references_id, invoice_id, status
+					  FROM ". $this->db_table ."
+					  WHERE references_id = ?
+					  LIMIT 0,1";
 
+			$stmt = $this->conn->prepare($query);
+			$stmt->bindParam(1, $this->references_id);
+			$stmt->execute();
+
+			$dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			$this->references_id = $dataRow['references_id'];
+			$this->invoice_id = $dataRow['invoice_id'];
+			$this->status = $dataRow['status'];
 		}
 	}
