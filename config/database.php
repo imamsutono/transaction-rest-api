@@ -1,7 +1,7 @@
 <?php
 	class Database {
 		private $host = "127.0.0.1";
-		private $db_name = "transaction";
+		private $db_name = "transaction_detik";
 		private $username = "root";
 		private $password = "";
 		public $conn;
@@ -11,7 +11,7 @@
 
 			try {
 				$this->conn = new PDO("mysql:host=". $this->host .";dbname=". $this->db_name, $this->username, $this->password);
-				$this->conn->exec();
+				$this->conn->exec("set names utf8");
 			} catch(PDOException $exception) {
 				echo "Database could not be connected: ". $exception->getMessage();
 			}
