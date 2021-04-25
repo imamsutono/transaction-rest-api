@@ -76,4 +76,23 @@
 			$this->invoice_id = $dataRow['invoice_id'];
 			$this->status = $dataRow['status'];
 		}
+
+		public function changeStatus() {
+			$query = "UPDATE ". $this->db_table ."
+					  SET status = :status
+					  WHERE references_id = :references_id";
+
+			$stmt = $this->conn->prepare($query);
+
+			$this->status = htmlspecialchars(strip_tags($this->status));
+			$this->references_id = htmlspecialchars(strip_tags($this->references_id));
+
+			$stmt->bindParam(":status", $this->status);
+			$stmt->bindParam(":references_id", $this->references_id);
+
+			if ($stmt->execute()) {
+				return true;
+			}
+			return false;
+		}
 	}
