@@ -15,9 +15,10 @@
 			$stmt = $this->conn->prepare($query);
 
 			if ($stmt->execute()) {
-				return true;
+				echo "Table ". $table ." successfully created\n";
+			} else {
+				echo "Table ". $table ." can not be created\n";
 			}
-			return false;
 		}
 
 		public function drop() {
